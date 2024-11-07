@@ -1,36 +1,12 @@
 #include <iostream>
 #include <string>
+#include <list>
+#include "Biblioteca.c++"
+
 using namespace std;
 
 int opcao;
 int opcao_livro;
-
-struct Node {
-    string nome;
-    Node* proximo;
-};
-
-// Função para adicionar um nome na lista
-void adicionar_nome(Node** head, string novo_nome) {
-    Node* newnode = new Node();
-    newnode->nome = novo_nome;
-    newnode->proximo = *head;
-    *head = newnode; // Atualiza o head para o novo nó
-}
-
-// Função para exibir todos os nomes na lista
-void todos_os_nomes(Node* node) {
-    if (node == nullptr) {
-        cout << "A lista está vazia." << endl;
-        return;
-    }
-
-    cout << "\nLista de nomes: " << endl;
-    while (node != nullptr) {
-        cout << "- " << node->nome << endl;
-        node = node->proximo;
-    }
-}
 
 // Menu principal
 int menu() {
@@ -56,19 +32,8 @@ int menu_cadastro_livro() {
    return opcao_livro;
 }
 
-// Função para adicionar livro à lista
-void adicionar_livro(Node** head) {
-    string nome_livro;
-    cout << "\n.:: ADICIONAR LIVRO NA BIBLIOTECA ::.\n";
-    cout << "Nome: ";
-    cin.ignore();
-    getline(cin, nome_livro);
-    adicionar_nome(head, nome_livro); // Adiciona o livro à lista
-    cout << "Livro adicionado com sucesso!" << endl;
-}
-
 int main() {
-    Node* listaLivros = nullptr; // Inicializa a lista como vazia
+    cout << ".:: SISTEMA BIBLIOTECA ::.";
 
     while (true) {
         opcao = menu();
@@ -79,7 +44,7 @@ int main() {
                     opcao_livro = menu_cadastro_livro();
 
                     if (opcao_livro == 1) {
-                        adicionar_livro(&listaLivros); // Adiciona livro à lista
+                        cadastrarLivro(); // Adiciona livro à lista
                     } else if (opcao_livro == 2) {
                         break; // Volta ao menu principal
                     } else {
@@ -89,13 +54,11 @@ int main() {
                 break;
             
             case 6: // Exibir todos os livros
-                todos_os_nomes(listaLivros); // Exibe a lista de livros
+                exibirLivrosCadastrados(); // Exibe a lista de livros
                 break;
-
             case 7: // Finalizar o aplicativo
                 cout << "Encerrando o aplicativo..." << endl;
                 return 0;
-
             default:
                 cout << "Opção inválida no menu principal." << endl;
                 break;
